@@ -8,7 +8,7 @@ class WordShuffle:
         self.root.geometry("312x324")
 
         self.grid_size = 4
-        self.letters = 'abcdefghijklmnopqrstuvwxyz'
+        self.words = " " #words
         self.current_word = ""
         
         self.input_frame()
