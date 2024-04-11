@@ -8,7 +8,7 @@ class WordShuffle:
         self.root.geometry("312x324")
 
         self.grid_size = 4
-        self.words = " " #words
+        self.letters = ['test', 'sink', 'hiss', 'when']
         self.current_word = ""
         
         self.input_frame()
@@ -22,15 +22,15 @@ class WordShuffle:
         self.grid_frame = tk.Frame(self.root)
         self.grid_frame.pack()
 
+        word = random.choice(self.letters)
+        letters = list(word)
+        random.shuffle(letters)
+
         self.buttons = []
-        for _ in range(self.grid_size):
-            row = []
-            for _ in range(self.grid_size):
-                letter = random.choice(self.letters)
+        for i, letter in enumerate(word):
                 button = tk.Button(self.grid_frame, text=letter, width=4, height=2, command=lambda letter=letter: self.select_letter(letter))
-                button.grid(row=7, column=_, padx=5, pady=100)
-                row.append(button)
-            self.buttons.append(row)
+                button.grid(row=6, column=i, padx=5, pady=5)
+                self.buttons.append(button)
 
     def create_buttons(self):
         self.clear_button = tk.Button(self.root, text="Clear", command=self.clear_word)
