@@ -23,13 +23,14 @@ class WordShuffle:
         self.grid_frame.pack()
 
         word = random.choice(self.letters)
-        letters = list(word)
+        letters = list(word.upper())
         random.shuffle(letters)
 
         self.buttons = []
-        for i, letter in enumerate(word):
+        for i, letter in enumerate(letters):
+                tk.Label(self.grid_frame, text="").grid(row=6)
                 button = tk.Button(self.grid_frame, text=letter, width=4, height=2, command=lambda letter=letter: self.select_letter(letter))
-                button.grid(row=6, column=i, padx=5, pady=5)
+                button.grid(row=7, column=i, padx=5, pady=5)
                 self.buttons.append(button)
 
     def create_buttons(self):
