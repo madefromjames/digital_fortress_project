@@ -14,13 +14,20 @@ class WordShuffle:
         self.current_word = ""  # Store the current word being formed
         
         # Create the input frame, grid of buttons, and control buttons
-        self.input_frame()  
+        self.create_input_frame()  
         self.create_grid()
         self.create_buttons()
 
-    def input_frame(self):
+    def create_input_frame(self):
         # Placeholder for any input frame widgets you want to add
-        pass
+        self.input_frame = tk.Frame(self.root)
+        self.input_frame.pack()
+
+        self.word_label = tk.Label(self.input_frame, text='Word')
+        self.word_label.pack()
+
+        self.input_entry = tk.Entry(self.input_frame, width=20, bd=6)
+        self.input_entry.pack()
         
     def create_grid(self):
         # Create a frame to hold the grid of buttons
@@ -38,7 +45,7 @@ class WordShuffle:
             # Add an empty row for spacing between buttons and any other widgets above
             tk.Label(self.grid_frame, text="").grid(row=6)
             # Create a button with the letter as its text
-            button = tk.Button(self.grid_frame, text=letter, width=4, height=2, command=lambda letter=letter: self.select_letter(letter))
+            button = tk.Button(self.grid_frame, text=letter, width=4, height=2, command=lambda l=letter: self.select_letter(l))
             button.grid(row=7, column=i, padx=5, pady=5)  # Position the button in the grid
             self.buttons.append(button)  # Add the button to the list of buttons
 
