@@ -69,6 +69,8 @@ class WordShuffle:
         # Function to handle when the Submit button is clicked
         pass  # Placeholder for submitting the word
 
+    # Lets work on a new game with no classes
+
 def main():
     # Create the tkinter root window and initialize the WordShuffle game
     win = tk.Tk()
