@@ -12,6 +12,7 @@ class WordShuffle:
         self.grid_size = 4  # Number of buttons in a row
         self.letters = ['test', 'sink', 'hiss', 'when']  # List of words to be displayed
         self.current_word = ""  # Store the current word being formed
+        self.selected_buttons = [] 
         
         # Create the input frame, grid of buttons, and control buttons
         self.create_input_frame()  
@@ -20,13 +21,13 @@ class WordShuffle:
 
     def create_input_frame(self):
         # Placeholder for any input frame widgets you want to add
-        self.input_frame = tk.Frame(self.root)
+        self.input_frame = tk.Frame(self.root, pady=20)
         self.input_frame.pack()
 
         self.word_label = tk.Label(self.input_frame, text='Word')
         self.word_label.pack()
 
-        self.input_entry = tk.Entry(self.input_frame, width=20, bd=6)
+        self.input_entry = tk.Entry(self.input_frame, width=20, bd=5)
         self.input_entry.pack()
         
     def create_grid(self):
@@ -42,11 +43,10 @@ class WordShuffle:
         self.buttons = []  # List to store the button widgets
         # Create buttons for each letter in the shuffled word
         for i, letter in enumerate(letters):
-            # Add an empty row for spacing between buttons and any other widgets above
-            tk.Label(self.grid_frame, text="").grid(row=6)
             # Create a button with the letter as its text
-            button = tk.Button(self.grid_frame, text=letter, width=4, height=2, command=lambda l=letter: self.select_letter(l))
+            button = tk.Button(self.grid_frame, text=letter, width=4, height=2, cursor="hand2")
             button.grid(row=7, column=i, padx=5, pady=5)  # Position the button in the grid
+            button.config(command=lambda l=letter, btn=button: self.select_letter(l, btn))
             self.buttons.append(button)  # Add the button to the list of buttons
 
     def create_buttons(self):
@@ -57,13 +57,21 @@ class WordShuffle:
         self.submit_button = tk.Button(self.root, text="Submit", command=self.submit_word)
         self.submit_button.pack()
 
-    def select_letter(self, letter):
+    def select_letter(self, letter, button):
         # Function to handle when a letter button is clicked
         self.current_word += letter  # Add the clicked letter to the current word
+        self.input_entry.delete(0, tk.END)
+        self.input_entry.insert(tk.END, self.current_word)
+
+        if button not in self.selected_buttons:
+            button.config(state=tk.DISABLED)
+            self.selected_buttons.append(button)
 
     def clear_word(self):
         # Function to clear the current word
         self.current_word = ""  # Clear the current word
+        # for buttons in self.buttons[]:
+        #     button.config(state=tk.NORMAL)
 
     def submit_word(self):
         # Function to handle when the Submit button is clicked
