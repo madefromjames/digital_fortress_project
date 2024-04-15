@@ -1,90 +1,60 @@
-import tkinter as tk
+import tkinter
+from tkinter import *
 import random
+from tkinter import messagebox
 
-class WordShuffle:
-    def __init__(self, root):
-        # Initialize the WordShuffle class with a tkinter root window
-        self.root = root
-        self.root.title("Word Shuffle")  # Set the title of the window
-        self.root.geometry("312x324")    # Set the size of the window
+root = tkinter.Tk()
 
-        # Define the properties of the game
-        self.grid_size = 4  # Number of buttons in a row
-        self.letters = ['test', 'sink', 'hiss', 'when']  # List of words to be displayed
-        self.current_word = ""  # Store the current word being formed
-        self.selected_buttons = [] 
-        
-        # Create the input frame, grid of buttons, and control buttons
-        self.create_input_frame()  
-        self.create_grid()
-        self.create_buttons()
+answers=["apple","mango","banana",'achieve','kolkata','evening','servant','receiver','london','ferrari','hollow','horror','master','morning','bottle','pen','router','copy','narrow','wide','dive','love','block','right','simple','deaf','single','knight','hope']
+words=['plpea','gnoma','annaba','hveeica','lkaatko','egvnine','aestnrv','iceever','lndono','rrreifa','wllhoo','oohrrr','rtemsa','nnrgimo','lttobe','enp','ourrte','ypco','rraonw','wdie','ievd','elov','klboc','ightr','plmsie','dfea','glneis','ghtkni','opeh']
 
-    def create_input_frame(self):
-        # Placeholder for any input frame widgets you want to add
-        self.input_frame = tk.Frame(self.root, pady=20)
-        self.input_frame.pack()
+num=random.randrange(0,len(words),1)
+c=0
+d=0
+s = ""
+l = Label(root)
 
-        self.word_label = tk.Label(self.input_frame, text='Word')
-        self.word_label.pack()
+def reset():
+    global words, answers, num
+    num=random.randrange(0,len(words),1)
+    label.config(text = words[num])
+    e1.delete(0, END)
 
-        self.input_entry = tk.Entry(self.input_frame, width=20, bd=5)
-        self.input_entry.pack()
-        
-    def create_grid(self):
-        # Create a frame to hold the grid of buttons
-        self.grid_frame = tk.Frame(self.root)
-        self.grid_frame.pack()
+def default():
+    global words,answers,num
+    label.config(text = words[num])
 
-        # Randomly choose a word from the list and shuffle its letters
-        word = random.choice(self.letters)
-        letters = list(word.upper())  # Convert the word to uppercase and create a list of its letters
-        random.shuffle(letters)  # Shuffle the letters randomly
+def checkans():
+    global words, answers, num, c, d, s, l
+    d=int(d)+1
+    var = e1.get() #getting the answer
+    if var == answers[num]: #checking if the answer is right or not
+        messagebox.showinfo("Congratulations", "It's the correct answer!!")
+        c = int(c)+1
+    else:
+        messagebox.showerror("Sorry", "It's not the correct answer.")
+    s = 'Score :' + str(c) + '/' + str(d)
+    l.forget()
+    l = Label(root, font=("Verdana", 20), text=s, bg="#000000", fg="#fff", )
+    l.pack(side=LEFT)
+    reset()
 
-        self.buttons = []  # List to store the button widgets
-        # Create buttons for each letter in the shuffled word
-        for i, letter in enumerate(letters):
-            # Create a button with the letter as its text
-            button = tk.Button(self.grid_frame, text=letter, width=4, height=2, cursor="hand2")
-            button.grid(row=7, column=i, padx=5, pady=5)  # Position the button in the grid
-            button.config(command=lambda l=letter, btn=button: self.select_letter(l, btn))
-            self.buttons.append(button)  # Add the button to the list of buttons
 
-    def create_buttons(self):
-        # Create control buttons for the game
-        self.clear_button = tk.Button(self.root, text="Clear", command=self.clear_word)
-        self.clear_button.pack()
+root.geometry("500x500+500+150")
+root.title("Jumbled word game")
+root.configure(background="#000000")
 
-        self.submit_button = tk.Button(self.root, text="Submit", command=self.submit_word)
-        self.submit_button.pack()
+Label(root,text="JUMBLED WORD GAME",font = ("Verdana",28),bg = "#000000", fg = "#fff").pack(pady = 5)
+label = Label(root,font = ("Verdana",22),bg = "#000000", fg = "#fff")
+label.pack(pady = 30,ipady=10,ipadx=10) # created a label that will be shown on the box and the pack() helps in executing what i wrote in Label
 
-    def select_letter(self, letter, button):
-        # Function to handle when a letter button is clicked
-        self.current_word += letter  # Add the clicked letter to the current word
-        self.input_entry.delete(0, tk.END)
-        self.input_entry.insert(tk.END, self.current_word)
+ans = StringVar() #defining that this is a string variable
+e1 = Entry(root,font = ("Verdana",20),textvariable = ans,)
+e1.pack(ipady=5,ipadx=5) #created an input box
+#ipad=internal padding in x is called ipadx and y is called ipady
+Button(root,text = "Check",font = ("Comic sans ms",20),width = 10,bg="#333945",fg="#45CE30",relief = GROOVE,command = checkans,).pack(pady = 40) #created a submit button
+Button(root,text = "Reset",font = ("Comic sans ms",20),width = 10,bg="#777E8B",fg="#E1DA00",relief = GROOVE,command = reset).pack() #created a reset button
 
-        if button not in self.selected_buttons:
-            button.config(state=tk.DISABLED)
-            self.selected_buttons.append(button)
+default()
 
-    def clear_word(self):
-        # Function to clear the current word
-        self.current_word = ""  # Clear the current word
-        # for buttons in self.buttons[]:
-        #     button.config(state=tk.NORMAL)
-
-    def submit_word(self):
-        # Function to handle when the Submit button is clicked
-        pass  # Placeholder for submitting the word
-
-    # Lets work on a new game with no classes
-    # How do I push
-
-def main():
-    # Create the tkinter root window and initialize the WordShuffle game
-    win = tk.Tk()
-    game = WordShuffle(win)
-    win.mainloop()  # Start the tkinter event loop
-
-if __name__ == "__main__":
-    main()
+root.mainloop() #its like the main function
