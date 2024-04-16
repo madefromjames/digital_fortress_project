@@ -1,85 +1,101 @@
-import tkinter as tk
+import tkinter
+from tkinter import *
 import random
+from tkinter import messagebox
 
-def create_input_frame(root):
-    # Create the input frame and its widgets
-    input_frame = tk.Frame(root, pady=20)
-    input_frame.pack()
+answers = [
+    "python",
+    "java",
+    "swift",
+    "canada",
+    "india",
+    "america",
+    "london",
+]
 
-    word_label = tk.Label(input_frame, text='Word')
-    word_label.pack()
+words = [
+    "nptoyh",
+    "avja",
+    "wfsit",
+    "cdanaa",
+    "aidin",
+    "aiearcm",
+    "odnlon",
+]
 
-    input_entry = tk.Entry(input_frame, width=20, bd=5)
-    input_entry.pack()
+num = random.randrange(0,7,1)
 
-    return input_frame, input_entry
 
-def create_grid(root, input_entry):
-    # Create the grid of buttons and its widgets
-    grid_frame = tk.Frame(root)
-    grid_frame.pack()
+def res():
+    global words,answers,num
+    num = random.randrange(0,7,1)
+    lbl.config(text=words[num])
+    e1.delete(0, END)
 
-    letters = ['test', 'sink', 'hiss', 'when']  # List of words to be displayed
-    word = random.choice(letters)
-    letters = list(word.upper())  # Convert the word to uppercase and create a list of its letters
-    random.shuffle(letters)  # Shuffle the letters randomly
+def default():
+    global words,answers,num
+    lbl.config(text = words[num])
 
-    buttons = []  # List to store the button widgets
-    for i, letter in enumerate(letters):
-        # Create a button with the letter as its text
-        button = tk.Button(grid_frame, text=letter, width=4, height=2, cursor="hand2")
-        button.grid(row=7, column=i, padx=5, pady=5)  # Position the button in the grid
-        button.config(command=lambda l=letter, btn=button, input_entry=input_entry: select_letter(l, btn, input_entry))
-        buttons.append(button)  # Add the button to the list of buttons
 
-    return grid_frame, buttons
+def checkans():
+    global words,answers,num
+    var = e1.get()
+    if var == answers[num]:
+        messagebox.showinfo("Success","This is a correct answer")
+        res()
+    else:
+        messagebox.showerror("Error","This is not correct answer")
+        e1.delete(0, END)
 
-def create_buttons(root):
-    # Create the control buttons and their commands
-    clear_button = tk.Button(root, text="Clear", command=clear_word)
-    clear_button.pack()
 
-    submit_button = tk.Button(root, text="Submit", command=submit_word)
-    submit_button.pack()
+    
+root = tkinter.Tk()
+root.geometry("350x400+400+300")
+root.title("Jumbbled")
+root.configure(background="#000000")
 
-def select_letter(letter, button, input_entry):
-    # Function to handle when a letter button is clicked
-    current_word = input_entry.get()  # Get the current word from the input entry
-    current_word += letter  # Add the clicked letter to the current word
-    input_entry.delete(0, tk.END)
-    input_entry.insert(tk.END, current_word)
+lbl = Label(
+    root,
+    text = 'Your here',
+    font = ("Verdana", 18),
+    bg = "#000000",
+    fg = "#ffffff",
+)
+lbl.pack(pady=30,ipady=10,ipadx=10)
 
-    if button not in selected_buttons:
-        button.config(state=tk.DISABLED)
-        selected_buttons.append(button)
 
-def clear_word():
-    # Function to clear the current word
-    global current_word
-    current_word = ""  # Clear the current word
-    for button in buttons:
-        button.config(state=tk.NORMAL)
+ans1 = StringVar()
+e1 = Entry(
+    root,
+    font = ("Verdana", 16),
+    textvariable = ans1
+)
+e1.pack(ipady=5,ipadx=5)
 
-def submit_word():
-    # Function to handle when the Submit button is clicked
-    print("Submitted word:", current_word)
+btncheck = Button(
+    root,
+    text = 'check',
+    font = ("Comic sans ms", 16),
+    width = 16,
+    bg = "#4C4B4B",
+    fg = "#6ab04c",
+    relief = GROOVE,
+    command = checkans
+)
+btncheck.pack(pady=40)
 
-# Initialize the tkinter root window
-root = tk.Tk()
-root.title("Word Shuffle")
-root.geometry("312x324")
+btnreset = Button(
+    root,
+    text = 'reset',
+    font = ("Comic sans ms", 16),
+    width = 16,
+    bg = "#4C4B4B",
+    fg = "#EA425C",
+    relief = GROOVE,
+    command = res
+)
+btnreset.pack()
 
-# Initialize the input frame and its widgets
-input_frame, input_entry = create_input_frame(root)
 
-# Initialize the grid of buttons and its widgets
-grid_frame, buttons = create_grid(root, input_entry)
-
-# Initialize the control buttons and their commands
-create_buttons(root)
-
-# Initialize the list of selected buttons
-selected_buttons = []
-
-# Start the tkinter event loop
+default()
 root.mainloop()
