@@ -64,6 +64,28 @@ def main():
                 current_word = list(shuffled_word)
                 random.shuffle(current_word)
                 shuffled_word = "".join(current_word)
+            word.config(text=shuffled_word)
+        
+            def show_hint(word, count):
+                nonlocal hint_count, points
+                hint_count = count
+
+                word_length = len(word)
+
+                if hint_count >= word_length:
+                    show_message("Max hint word!", color='blue')
+
+                if count < word_length:
+                    for answer in main_words:
+                        if len(answer) == word_length and all(letter in answer for letter in word):
+                            if points < 1:
+                                show_message("Not enough points!")
+                            else:
+                                hint_label.config(text=f"{hint_label['text']} {answer[hint_count].upper()}")
+                                hint_count += 1
+                                points -= 1
+                            score.config(text=f"Score: {str(points)}")
+                            break    
 
 
             window.mainloop()
