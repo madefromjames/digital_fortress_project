@@ -93,6 +93,31 @@ def main():
             message_label = Label(window, text="", bg="#040402", font="Titillium 13 bold")
             message_label.pack()
 
+            # Function for reshuffle button
+            def reshuffle_btn():
+                nonlocal rand_word
+                original_word = word.cget("text")
+                new_shuffled_word = original_word
+                # Ensure the new shuffled word is different original and correct word
+                while new_shuffled_word == original_word or new_shuffled_word == rand_word:
+                    current_word = list(original_word)
+                    random.shuffle(current_word)
+                    new_shuffled_word = ''.join(current_word)
+                word.config(text=new_shuffled_word)
+
+
+            # Display the shuffled word
+            word = Label(window, text=shuffled_word, pady=10, bg="#040402", fg="#decac0", font="Titillium 35 bold")
+            word.pack()
+
+            # Frame for buttons
+            button_frame = Frame(window, bg="#040402")  # Create a frame to hold the buttons
+            button_frame.pack(pady=20)  # Pack the frame with some padding
+
+            # Shuffle button
+            shuffle = Button(button_frame, text="🔀 Shuffle", width=14, bd=4, font=("", 13), bg="#ad8d76", cursor="hand2", command=reshuffle_btn)
+            shuffle.grid(row=0, column=0, padx=10, pady=10)  # Pack the shuffle button to the left with padding
+
 
             window.mainloop()
 
