@@ -1,4 +1,4 @@
-from tkinter import Tk, Button, Label, Entry, Frame, END, PhotoImage, LEFT, RIGHT
+from tkinter import Tk, Button, Label, Entry, Frame, END, PhotoImage, LEFT, RIGHT, Toplevel
 import random
 from tkinter import messagebox
 
@@ -153,56 +153,39 @@ def main():
                 message_label.config(text=message, fg=color)
                 # Remove the message after 4 seconds
                 window.after(4000, lambda: message_label.config(text=""))
+            
+            # FUnction to skip/change word
+            def skip_word():
+                nonlocal rand_num, points, previous_word, rand_word
+                previous_word = rand_word
+                response = messagebox.askyesno('Warning', 'You will lose 4 points. Do you wish to proceed?')
+                if response:
+                    if points < 4:
+                        show_message("Not enough points!")
+                        return
+                    points -= 4
+                    point.config(text=f"Points: {str(points)}")
+                    # Select a new random word
+                    rand_num = random.randrange(0, len(main_words))
+                    rand_word = main_words[rand_num]
+                    # Reshuffle the word for display
+                    break_word = list(rand_word)
+                    random.shuffle(break_word)
+                    shuffled_word = "".join(break_word)
+                    while shuffled_word == rand_word:
+                        current_word = list(shuffled_word)
+                        random.shuffle(current_word)
+                        shuffled_word = "".join(current_word)
+                    word.configure(text=shuffled_word)
+                    get_input.delete(0, END)
+                    hint_label.config(text="HINT ▶")
+                    show_message(f"Previous Answer: {previous_word.upper()}")
 
             # Function to go back to start page
             def back_button():
                 # Destroy the current window and show start page
                 window.destroy()
                 start_page()
-
-            def help_info():
-                # Create the main window
-                help_window = Tk()
-                help_window.geometry("500x500+500+100")
-                help_window.resizable(0, 0)
-                help_window.title("Word Game")
-                help_window.configure(background="#040402")
-                help_window.iconbitmap(r'wordicon.ico')
-
-                # Function to go back to start page
-                def back_button():
-                    # Destroy the current window and show start page
-                    help_window.destroy()
-                    start_page()
-
-                # Load the back button image
-                # img2 = PhotoImage(file="back-btn.png")
-
-                # Back button
-                # back_btn = Button(help_window, image=img2, bg="#040402", fg="#decac0", border=0, font="none 25 bold", cursor="hand2", command=back_button)
-                # back_btn.pack()
-
-                instruction_label = Label(help_window, text="""How to Play
-    1. OBJECTIVES: Guess the shuffled word correctly to earn points.
-
-    2. SHUFFLE BUTTON: Use this button to reshuffle the letters of the word if you're stuck.
-
-    3. HINT BUTTON: Get a hint for the word by clicking this button. Each hint deducts a point from your score.
-
-    4. SKIP BUTTON: Skip a word if you're unable to guess it. Skipping deducts 4 points from your score.
-
-    5. SUBMIT BUTTON: Enter your guess in the input field and click this button to check if it's correct.
-
-    6. LIVES: You start with 5 lives represented by heart emojis (💖). Each incorrect guess deducts one life.
-
-    7. POINTS: Earn points for correct guesses. Your current score is displayed at the top.
-                                    
-    8. HIGH SCORES: Your highest score achieved in the game will be displayed when the game ends.
-                                            
-    Have fun and good luck! 🍀""", bg="#040402", fg="#decac0", font="Titillium 11 bold", justify=LEFT, wraplength=470, anchor="nw")
-                instruction_label.pack(fill="both", padx=10)
-
-                help_window.mainloop()
 
             # Navigation frame for button and score
             nav_label = Frame(window, bg="#040402")
@@ -213,9 +196,9 @@ def main():
             back_btn.pack(side=LEFT, padx=(10))
 
             # Help button
-            help_btn = Button(nav_label, text="❓help", bg="#040402", fg="#ebab34", border=0, font="none 13 italic", cursor="hand2", command=help_info)
+            help_btn = Button(nav_label, text="❓help", bg="#040402", fg="#ebab34", border=0, font="none 13 italic", cursor="hand2", command=lambda: help_info(Toplevel()))
             help_btn.pack(side=LEFT, padx=(10, 40))
-
+            
             # Score label
             point = Label(nav_label, text=f"Points: {str(points)}", pady=15, bg="#040402", fg="#decac0", font="Titillium 13 bold")
             point.pack(side=LEFT, padx=(40, 10))
@@ -253,8 +236,59 @@ def main():
             submit.grid(row=0, column=1, padx=10, pady=10)  # Pack the submit button to the right with padding
             window.bind('<Return>', lambda event=None: submit.invoke()) # Bind keyboard's ENTER button to submit button
 
+            # Hint button
+            hint = Button(button_frame, text="ℹ️ Hint", width=14, bd=4, font=("", 13), bg="#ad8d76", cursor="hand2", command= lambda: show_hint(word.cget("text"), hint_count))
+            hint.grid(row=1, column=0, padx=10, pady=10)  # Pack the hint button at the top with padding
+
+            # Skip button
+            skip = Button(button_frame, text="⏩ Skip", width=14, bd=4, font=("", 13), bg="#ad8d76", cursor="hand2", command=skip_word)
+            skip.grid(row=1, column=1, padx=10, pady=10)  # Pack the skip button at the top with padding
 
             window.mainloop()
+
+        def help_info(help_window):
+            help_window.geometry("500x500+500+100")
+            help_window.resizable(0, 0)
+            help_window.title("Word Game")
+            help_window.configure(background="#040402")
+            help_window.iconbitmap(r'wordicon.ico')
+
+            # Function to go back to start page
+            def back_button():
+                # Destroy the current window and show start page
+                help_window.destroy()
+
+            # Load the back button image
+            img2 = PhotoImage(file="back-btn.png")
+
+            frame = Frame(help_window, bg="#040402")
+            frame.pack()
+
+            # Back button
+            back_btn2 = Button(frame, image=img2, bg="#040402", fg="#decac0", border=0, font="none 25 bold", cursor="hand2", command=back_button)
+            back_btn2.pack(padx=(0, 440), pady=(5, 0))
+
+            instruction_label = Label(frame, text="""How to Play
+1. OBJECTIVES: Guess the shuffled word correctly to earn points.
+
+2. SHUFFLE BUTTON: Use this button to reshuffle the letters of the word if you're stuck.
+
+3. HINT BUTTON: Get a hint for the word by clicking this button. Each hint deducts a point from your score.
+
+4. SKIP BUTTON: Skip a word if you're unable to guess it. Skipping deducts 4 points from your score.
+
+5. SUBMIT BUTTON: Enter your guess in the input field and click this button to check if it's correct.
+
+6. LIVES: You start with 5 lives represented by heart emojis (💖). Each incorrect guess deducts one life.
+
+7. POINTS: Earn points for correct guesses. Your current score is displayed at the top.
+                                
+8. HIGH SCORES: Your highest score achieved in the game will be displayed when the game ends.
+                                        
+                            Have fun and good luck! 🍀""", bg="#040402", fg="#decac0", font="Titillium 11 bold", justify=LEFT, wraplength=470, anchor="s")
+            instruction_label.pack(fill="both", padx=10)
+
+            help_window.mainloop()
             
         # Function to show main game window
         def show_game():
