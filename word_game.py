@@ -1,4 +1,4 @@
-from tkinter import Tk, Button, Label, Entry, Frame, END, PhotoImage, LEFT, RIGHT
+from tkinter import Tk, Button, Label, Entry, Frame, END, PhotoImage, LEFT
 import random
 from tkinter import messagebox
 
@@ -14,13 +14,14 @@ def main():
             window = Tk()
             window.geometry("500x500+500+100")
             window.resizable(0, 0)
-            window.title("Word Game")
+            window.title("Word Shuffle Game")
             window.configure(background="#040402")
             window.iconbitmap(r'wordicon.ico')
 
             # Load the back button image
-            img1 = PhotoImage(file="back-btn.png")
+            # img1 = PhotoImage(file="back-btn.png")
 
+            # MAIN GAME HERE 😊
             # list of words for the game
             main_words = [
                 'grammar', 'sunrise', 'firefly', 'garden', 'airplane', 'fireplace', 'virtual', 'acoustic', 'quartz', 'jungle', 'opaque',
@@ -50,7 +51,6 @@ def main():
             rand_word = main_words[rand_num]
 
             previous_word = ''
-            lives = '💖💖💖💖💖'
             hint_count = 0
             points = 1
 
@@ -64,7 +64,7 @@ def main():
                 current_word = list(shuffled_word)
                 random.shuffle(current_word)
                 shuffled_word = "".join(current_word)
-            word.config(text=shuffled_word)
+           
         
             def show_hint(word, count):
                 nonlocal hint_count, points
@@ -87,9 +87,15 @@ def main():
                             score.config(text=f"Score: {str(points)}")
                             break    
 
+            hint_label = Label(window, text="HINT ▶", pady=10, bg="#040402", fg="#decac0", font="Titillium 13 bold")
+            hint_label.pack()
+
+            message_label = Label(window, text="", bg="#040402", font="Titillium 13 bold")
+            message_label.pack()
+
 
             window.mainloop()
-            
+
         # Function to show main game window
         def show_game():
             # Destroy the start page and start the main game
@@ -125,11 +131,11 @@ def main():
 
         # Start button
         start_btn = Button(main_window, text="Start", width=14, bd=4, bg="#ad8d76", font=("", 10, 'bold',), cursor="hand2", command=show_game)
-        start_btn.pack(pady=(35, 5))
+        start_btn.pack(pady=(35, 10))
 
         # Exit button
         exit_btn = Button(main_window, text="Exit", width=14, bd=4, bg="#ad8d76", font=("", 10, 'bold',), cursor="hand2", command=lambda: main_window.destroy() if messagebox.askyesno('Exit', 'Are you sure you want to exit?') else None)
-        exit_btn.pack(pady=5)
+        exit_btn.pack(pady=(10))
 
         main_window.mainloop()
 
