@@ -21,7 +21,6 @@ def main():
             # Load the back button image
             # img1 = PhotoImage(file="back-btn.png")
 
-            # MAIN GAME HERE 😊
             # list of words for the game
             main_words = [
                 'grammar', 'sunrise', 'firefly', 'garden', 'airplane', 'fireplace', 'virtual', 'acoustic', 'quartz', 'jungle', 'opaque',
