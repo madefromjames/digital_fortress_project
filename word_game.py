@@ -77,10 +77,58 @@ def main():
                     new_shuffled_word = ''.join(current_word)
                 word.config(text=new_shuffled_word)
 
+            # Function to show a hint for the word
+            def show_hint(word, count):
+                nonlocal hint_count, points
+                hint_count = count
+
+                word_length = len(word)
+
+                if hint_count >= word_length:
+                    show_message("Max hint word!", color='#42f58a')
+
+                if count < word_length:
+                    for answer in main_words:
+                        # Compare word's letter and length to all element in main_words
+                        if len(answer) == word_length and all(letter in answer for letter in word):
+                            if points < 1:
+                                show_message("Not enough points!")
+                            else:
+                                hint_label.config(text=f"{hint_label['text']} {answer[hint_count].upper()}")
+                                hint_count += 1
+                                points -= 1
+                            point.config(text=f"Points: {str(points)}")
+                            break
+
+            # Function to show information message
+            def show_message(message, color='#faf202'):
+                message_label.config(text=message, fg=color)
+                # Remove the message after 4 seconds
+                window.after(4000, lambda: message_label.config(text=""))
+
+            # Navigation frame for button and score
+            nav_label = Frame(window, bg="#040402")
+            nav_label.pack(fill='x')
+
+            # Score label
+            point = Label(nav_label, text=f"Points: {str(points)}", pady=15, bg="#040402", fg="#decac0", font="Titillium 13 bold")
+            point.pack(side=LEFT, padx=(40, 10))
 
             # Display the shuffled word
             word = Label(window, text=shuffled_word, pady=10, bg="#040402", fg="#decac0", font="Titillium 35 bold")
             word.pack()
+
+            # Label for information messages
+            message_label = Label(window, text="", bg="#040402", font="Titillium 13 bold")
+            message_label.pack()
+
+            # Entry for user input
+            get_input = Entry(window, font="none 26 bold", bg="#decac0", bd=10, justify='center')
+            get_input.pack()
+
+            # Label for showing hint
+            hint_label = Label(window, text="HINT ▶", pady=10, bg="#040402", fg="#decac0", font="Titillium 13 bold")
+            hint_label.pack()
 
             # Frame for buttons
             button_frame = Frame(window, bg="#040402")  # Create a frame to hold the buttons
