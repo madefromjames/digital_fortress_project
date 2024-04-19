@@ -208,6 +208,10 @@ def main():
             submit = Button(button_frame, text="✅ Submit", width=14, bd=4, font=("", 13), bg="#ad8d76", cursor="hand2", command=check)
             submit.grid(row=0, column=1, padx=10, pady=10)  # Pack the submit button to the right with padding
             window.bind('<Return>', lambda event=None: submit.invoke()) # Bind keyboard's ENTER button to submit button
+            
+            # Hint button
+            hint = Button(button_frame, text="ℹ️ Hint", width=14, bd=4, font=("", 13), bg="#ad8d76", cursor="hand2", command= lambda: show_hint(word.cget("text"), hint_count))
+            hint.grid(row=1, column=0, padx=10, pady=10)  # Pack the hint button at the top with padding
 
             window.mainloop()
 
