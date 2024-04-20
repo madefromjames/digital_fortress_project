@@ -65,7 +65,7 @@ This game was developed by FHFJ Squad.
 
 - [@madefromjames](https://github.com/madefromjames)
 - [@Gracehills](https://github.com/Gracehills)
-- [Rubbercolt](https://github.com/Rubbercolt)
-- [UnSired-Security](https://github.com/UnSired-Security)
+- [@Rubbercolt](https://github.com/Rubbercolt)
+- [@UnSired-Security](https://github.com/UnSired-Security)
 
 __Feel free to customize it further with additional sections or information specific to your game!__ 😊
