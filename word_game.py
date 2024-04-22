@@ -92,7 +92,7 @@ def main():
                 # Update score and show message for correct answer
                 points += 5
                 point.config(text=f"Points: {str(points)}")
-                random_message = random.choice(["Great job!", "Well done!", "Awesome!", "Excellent!", "Fantastic!", "Amazing work!", "Keep it up!", "Yummy!", "Fresh!"])
+                random_message = random.choice(["Great job!", "Well done!", "Awesome!", "Excellent!", "Fantastic!", "Amazing work!", "Keep it up!", "Bravo!", "Fresh!"])
                 messagebox.showinfo('Correct ✅', random_message)
                 # Select a new random word
                 rand_num = random.randrange(0, len(main_words))
