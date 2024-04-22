@@ -85,10 +85,7 @@ def main():
             # Frame for buttons
             button_frame = Frame(window, bg="#040402")  # Create a frame to hold the buttons
             button_frame.pack(pady=20)  # Pack the frame with some padding
-
-            # Shuffle button
-            shuffle = Button(button_frame, text="🔀 Shuffle", width=14, bd=4, font=("", 13), bg="#ad8d76", cursor="hand2", command=reshuffle_btn)
-            shuffle.grid(row=0, column=0, padx=10, pady=10)  # Pack the shuffle button to the left with padding
+            
 
 
             window.mainloop()
