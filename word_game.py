@@ -117,7 +117,7 @@ def main():
                 # Handle incorrect input
                 if len(lives) == 1:
                     show_message(f'High Score: {points}', color='#42f58a')
-                    messagebox.showerror('Error', 'Game Over - Better Luck Next Time')
+                    messagebox.showerror('Game Over', f'High Score: {points} - Try Again')
                     back_button()
                 else:
                     messagebox.showerror('Error', 'Incorrect Answer')
