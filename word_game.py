@@ -117,7 +117,7 @@ def main():
                 # Handle incorrect input
                 if len(lives) == 1:
                     show_message(f'High Score: {points}', color='#42f58a')
-                    messagebox.showerror('Error', 'Game Over - Better Luck Next Time')
+                    messagebox.showerror('Game Over', f'High Score: {points} - Try Again')
                     back_button()
                 else:
                     messagebox.showerror('Error', 'Incorrect Answer')
@@ -222,7 +222,7 @@ def main():
         # Label for showing hint
         hint_label = Label(window, text="HINT ▶", pady=10, bg="#040402", fg="#decac0", font="Titillium 13 bold")
         hint_label.pack()
-
+            
         # Frame for buttons
         button_frame = Frame(window, bg="#040402")  # Create a frame to hold the buttons
         button_frame.pack(pady=20)  # Pack the frame with some padding
