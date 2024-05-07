@@ -15,10 +15,10 @@ def main():
         window.title("Word Game")
         window.configure(background="#040402")
         mydir = Path(__file__).parent
-        window.iconbitmap(mydir / 'images/wordicon.ico')
+        window.iconbitmap(mydir / 'wordicon.ico')
 
         # Load the back button image
-        img1 = PhotoImage(file=str(mydir / "images/back-btn.png"))
+        img1 = PhotoImage(file=str(mydir / "back-btn.png"))
 
         # list of words for the game
         main_words = [
@@ -253,7 +253,7 @@ def main():
         help_window.title("Word Game")
         help_window.configure(background="#040402")
         mydir1 = Path(__file__).parent
-        help_window.iconbitmap(mydir1 / 'images/wordicon.ico')
+        help_window.iconbitmap(mydir1 / 'wordicon.ico')
 
         # Function to go back to start page
         def back_button():
@@ -261,7 +261,7 @@ def main():
             help_window.destroy()
 
         # Load the back button image
-        img2 = PhotoImage(file=str(mydir1 / "images/back-btn.png"))
+        img2 = PhotoImage(file=str(mydir1 / "back-btn.png"))
 
         frame = Frame(help_window, bg="#040402")
         frame.pack()
@@ -305,10 +305,10 @@ def main():
     main_window.title("Word Game")
     main_window.configure(background="#040402")
     mydir = Path(__file__).parent
-    main_window.iconbitmap(mydir / 'images/wordicon.ico')
+    main_window.iconbitmap(mydir / 'wordicon.ico')
 
     # Load the image for the start page
-    img0 = PhotoImage(file=mydir / "images/wordgame.png")
+    img0 = PhotoImage(file=mydir / "wordgame.png")
 
     # Label to display the image
     image_label = Label(main_window, image=img0, bg="#040402")
